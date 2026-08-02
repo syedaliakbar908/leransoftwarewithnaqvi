@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Learn Software with Naqvi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-0:#0B0E14;
+    --bg-1:#11151D;
+    --bg-2:#171C26;
+    --line:#232935;
+    --text-hi:#E8ECF1;
+    --text-mid:#9AA5B4;
+    --text-low:#5D6675;
+    --amber:#F2B84B;
+    --teal:#56D8C4;
+    --coral:#EF7A5C;
+    --mono:'JetBrains Mono', monospace;
+    --sans:'Inter', sans-serif;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg-0);
+    color:var(--text-hi);
+    font-family:var(--sans);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit; text-decoration:none;}
+  .wrap{max-width:1080px; margin:0 auto; padding:0 28px;}
+
+  /* focus visibility */
+  a:focus-visible, button:focus-visible{outline:2px solid var(--amber); outline-offset:3px;}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.001ms !important; transition-duration:0.001ms !important;}
+  }
+
+  /* NAV */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(11,14,20,0.88);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  nav{display:flex; align-items:center; justify-content:space-between; padding:16px 28px; max-width:1080px; margin:0 auto;}
+  .brand{display:flex; align-items:center; gap:10px; font-family:var(--mono); font-weight:700; font-size:15px; letter-spacing:0.02em; color:var(--text-hi);}
+  .brand span{color:var(--amber);}
+  .brand-logo{width:34px; height:34px; border-radius:50%; object-fit:cover; border:1px solid var(--line);}
+
+  .whatsapp-float{
+    position:fixed; bottom:22px; right:22px; z-index:60;
+    background:#25D366; color:#04210F; width:54px; height:54px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center; font-size:26px;
+    box-shadow:0 8px 24px -6px rgba(0,0,0,0.6);
+  }
+  .whatsapp-float:hover{transform:scale(1.05);}
+
+  .social-row{display:flex; gap:14px; margin-top:16px;}
+  .social-pill{font-family:var(--mono); font-size:12px; color:var(--text-mid); border:1px solid var(--line); padding:7px 13px; border-radius:6px;}
+  .social-pill:hover{color:var(--text-hi); border-color:var(--text-mid);}
+
+  .contact-row{display:flex; flex-direction:column; gap:10px; margin-top:18px;}
+  .contact-item{display:flex; align-items:center; gap:10px; font-family:var(--mono); font-size:13.5px; color:var(--text-mid);}
+  .contact-item b{color:var(--text-hi); font-weight:500;}
+
+  /* FORM */
+  .form-box{border:1px solid var(--line); border-radius:12px; background:var(--bg-1); padding:36px;}
+  @media (max-width:600px){ .form-box{padding:24px 20px;} }
+  .form-row{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px;}
+  @media (max-width:600px){ .form-row{grid-template-columns:1fr;} }
+  .field{display:flex; flex-direction:column; gap:7px;}
+  .field label{font-family:var(--mono); font-size:12px; color:var(--text-mid);}
+  .field input, .field select, .field textarea{
+    background:var(--bg-2); border:1px solid var(--line); border-radius:6px;
+    color:var(--text-hi); font-family:var(--sans); font-size:14px; padding:11px 13px;
+    outline:none; width:100%;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus{border-color:var(--amber);}
+  .field textarea{resize:vertical; min-height:80px;}
+  .form-submit{
+    font-family:var(--mono); font-weight:700; font-size:14px; width:100%;
+    background:var(--amber); color:#241804; padding:14px 24px; border-radius:6px; border:none; cursor:pointer;
+    margin-top:6px;
+  }
+  .form-submit:hover{transform:translateY(-1px);}
+  .form-note{font-size:12.5px; color:var(--text-low); margin-top:12px; text-align:center;}
+  .navlinks{display:flex; gap:28px; font-size:14px; color:var(--text-mid);}
+  .navlinks a:hover{color:var(--text-hi);}
+  .nav-cta{
+    font-family:var(--mono); font-size:13px; padding:8px 16px;
+    border:1px solid var(--amber); color:var(--amber); border-radius:6px;
+  }
+  .nav-cta:hover{background:var(--amber); color:var(--bg-0);}
+  .navlinks-mobile{display:none;}
+  @media (max-width:720px){
+    .navlinks{display:none;}
+  }
+
+  /* HERO */
+  .hero{padding:88px 0 64px;}
+  .hero-grid{display:grid; grid-template-columns:1.1fr 0.9fr; gap:48px; align-items:center;}
+  @media (max-width:860px){ .hero-grid{grid-template-columns:1fr;} }
+
+  .eyebrow{
+    font-family:var(--mono); font-size:12.5px; color:var(--teal);
+    display:flex; align-items:center; gap:8px; margin-bottom:18px;
+  }
+  .eyebrow::before{content:'●'; font-size:9px; color:var(--teal);}
+
+  h1{
+    font-family:var(--mono); font-weight:700; font-size:44px; line-height:1.18;
+    color:var(--text-hi); margin-bottom:20px; letter-spacing:-0.01em;
+  }
+  h1 .accent{color:var(--amber);}
+  .hero-sub{font-size:16.5px; color:var(--text-mid); max-width:480px; margin-bottom:32px;}
+  .hero-sub b{color:var(--text-hi); font-weight:600;}
+
+  .cta-row{display:flex; gap:14px; flex-wrap:wrap; margin-bottom:36px;}
+  .btn-primary{
+    font-family:var(--mono); font-weight:700; font-size:14px;
+    background:var(--amber); color:#241804; padding:13px 24px; border-radius:6px;
+    display:inline-flex; align-items:center; gap:8px; transition:transform 0.15s ease;
+  }
+  .btn-primary:hover{transform:translateY(-1px);}
+  .btn-secondary{
+    font-family:var(--mono); font-weight:500; font-size:14px;
+    border:1px solid var(--line); color:var(--text-hi); padding:13px 24px; border-radius:6px;
+  }
+  .btn-secondary:hover{border-color:var(--text-mid);}
+
+  .stat-row{display:flex; gap:32px; flex-wrap:wrap;}
+  .stat b{font-family:var(--mono); font-size:22px; color:var(--text-hi); display:block;}
+  .stat span{font-size:12.5px; color:var(--text-low);}
+
+  /* Terminal signature element */
+  .terminal{
+    background:var(--bg-1); border:1px solid var(--line); border-radius:10px;
+    overflow:hidden; box-shadow:0 20px 60px -20px rgba(0,0,0,0.6);
+  }
+  .term-bar{display:flex; align-items:center; gap:7px; padding:12px 16px; background:var(--bg-2); border-bottom:1px solid var(--line);}
+  .term-dot{width:10px; height:10px; border-radius:50%;}
+  .term-title{margin-left:8px; font-family:var(--mono); font-size:12px; color:var(--text-low);}
+  .term-body{padding:22px 20px; font-family:var(--mono); font-size:13.5px; line-height:1.9; min-height:230px;}
+  .term-line{color:var(--text-mid);}
+  .term-prompt{color:var(--teal);}
+  .term-out{color:var(--text-hi);}
+  .term-comment{color:var(--text-low);}
+  .cursor{display:inline-block; width:8px; height:15px; background:var(--amber); vertical-align:middle; animation:blink 1s step-start infinite;}
+  @keyframes blink{50%{opacity:0;}}
+
+  /* SECTIONS shared */
+  section{padding:64px 0;}
+  .section-head{margin-bottom:40px; max-width:560px;}
+  .section-tag{font-family:var(--mono); font-size:12px; color:var(--amber); margin-bottom:10px;}
+  .section-tag::before{content:'// '; color:var(--text-low);}
+  h2{font-family:var(--mono); font-size:28px; font-weight:700; color:var(--text-hi); margin-bottom:12px;}
+  .section-sub{color:var(--text-mid); font-size:15px;}
+
+  .divider{border:none; border-top:1px solid var(--line);}
+
+  /* ABOUT */
+  .about-grid{display:grid; grid-template-columns:220px 1fr; gap:40px; align-items:start;}
+  @media (max-width:720px){ .about-grid{grid-template-columns:1fr;} }
+  .avatar{
+    width:100%; aspect-ratio:1; border-radius:10px; background:var(--bg-2); border:1px solid var(--line);
+    display:flex; align-items:center; justify-content:center; font-family:var(--mono); font-size:44px; font-weight:700; color:var(--amber);
+  }
+  .about-body p{color:var(--text-mid); font-size:15.5px; margin-bottom:14px;}
+  .about-body b{color:var(--text-hi);}
+  .tag-list{display:flex; flex-wrap:wrap; gap:8px; margin-top:16px;}
+  .tag{font-family:var(--mono); font-size:12px; color:var(--teal); border:1px solid var(--line); padding:5px 11px; border-radius:5px;}
+
+  /* COURSES - file tree style */
+  .course-list{border:1px solid var(--line); border-radius:10px; overflow:hidden; background:var(--bg-1);}
+  .course-row{
+    display:grid; grid-template-columns:28px 1.4fr 1fr auto; gap:16px; align-items:center;
+    padding:18px 20px; border-bottom:1px solid var(--line);
+  }
+  .course-row:last-child{border-bottom:none;}
+  .course-row:hover{background:var(--bg-2);}
+  @media (max-width:640px){
+    .course-row{grid-template-columns:24px 1fr; grid-template-areas:"icon name" ". desc" ". meta"; row-gap:4px;}
+  }
+  .course-icon{font-family:var(--mono); color:var(--amber); font-size:15px;}
+  .course-name{font-family:var(--mono); font-weight:500; font-size:14.5px; color:var(--text-hi);}
+  .course-desc{color:var(--text-mid); font-size:13.5px;}
+  .course-meta{font-family:var(--mono); font-size:12px; color:var(--text-low); text-align:right; white-space:nowrap;}
+
+  /* PROCESS */
+  .process-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:0; border:1px solid var(--line); border-radius:10px; overflow:hidden;}
+  @media (max-width:760px){ .process-grid{grid-template-columns:1fr;} }
+  .process-step{padding:26px 22px; border-right:1px solid var(--line); background:var(--bg-1);}
+  .process-step:last-child{border-right:none;}
+  @media (max-width:760px){ .process-step{border-right:none; border-bottom:1px solid var(--line);} .process-step:last-child{border-bottom:none;} }
+  .process-num{font-family:var(--mono); font-size:12px; color:var(--amber); margin-bottom:12px;}
+  .process-title{font-weight:600; font-size:14.5px; margin-bottom:8px; color:var(--text-hi);}
+  .process-desc{font-size:13.5px; color:var(--text-mid);}
+
+  /* TESTIMONIALS */
+  .test-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:18px;}
+  @media (max-width:760px){ .test-grid{grid-template-columns:1fr;} }
+  .test-card{background:var(--bg-1); border:1px solid var(--line); border-radius:10px; padding:22px;}
+  .test-quote{font-size:14px; color:var(--text-mid); margin-bottom:18px; line-height:1.7;}
+  .test-quote::before{content:'"'; color:var(--amber); font-family:var(--mono); font-size:18px;}
+  .test-who{display:flex; align-items:center; gap:10px;}
+  .test-avatar{width:32px; height:32px; border-radius:50%; background:var(--bg-2); border:1px solid var(--line); display:flex; align-items:center; justify-content:center; font-family:var(--mono); font-size:12px; color:var(--teal); font-weight:600;}
+  .test-name{font-size:13px; font-weight:600; color:var(--text-hi);}
+  .test-role{font-size:12px; color:var(--text-low);}
+
+  /* CTA / CONTACT */
+  .cta-section{padding:64px 0 96px;}
+  .cta-box{
+    border:1px solid var(--line); border-radius:12px; background:var(--bg-1);
+    padding:44px 40px; display:grid; grid-template-columns:1fr auto; gap:24px; align-items:center;
+  }
+  @media (max-width:680px){ .cta-box{grid-template-columns:1fr; text-align:left;} }
+  .cta-box h2{margin-bottom:8px;}
+  .cta-box .section-sub{margin-bottom:0;}
+
+  footer{border-top:1px solid var(--line); padding:32px 0; }
+  .footer-row{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;}
+  .footer-brand{font-family:var(--mono); font-size:13px; color:var(--text-low);}
+  .footer-links{display:flex; gap:20px; font-size:13px; color:var(--text-low);}
+  .footer-links a:hover{color:var(--text-mid);}
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <div class="brand"><img src="assets/naqvi-logo.jpeg" alt="Learn Software with Naqvi logo" class="brand-logo">learn_software<span>.naqvi</span></div>
+    <div class="navlinks">
+      <a href="#about">about</a>
+      <a href="#courses">courses</a>
+      <a href="#process">how it works</a>
+    </div>
+    <a href="#contact" class="nav-cta">enroll →</a>
+  </nav>
+</header>
+
+<main class="wrap">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-grid">
+      <div>
+        <div class="eyebrow">now enrolling — new batch</div>
+        <h1>Learn software.<br>Build real things.<br><span class="accent">With Naqvi.</span></h1>
+        <p class="hero-sub">Skill sikho step by step — <b>koi cramming nahi, sirf practice aur projects.</b> 3D Animation, AutoCAD, Software Engineering aur Computer Skills, beginner se job-ready tak.</p>
+        <div class="cta-row">
+          <a href="#contact" class="btn-primary">start learning →</a>
+          <a href="#courses" class="btn-secondary">view courses</a>
+        </div>
+        <div class="stat-row">
+          <div class="stat"><b>500+</b><span>students taught</span></div>
+          <div class="stat"><b>4</b><span>core courses</span></div>
+          <div class="stat"><b>1:1</b><span>doubt sessions</span></div>
+        </div>
+      </div>
+
+      <div class="terminal">
+        <div class="term-bar">
+          <div class="term-dot" style="background:#EF7A5C"></div>
+          <div class="term-dot" style="background:#F2B84B"></div>
+          <div class="term-dot" style="background:#56D8C4"></div>
+          <div class="term-title">naqvi@terminal ~ </div>
+        </div>
+        <div class="term-body">
+          <div class="term-line"><span class="term-prompt">$</span> whoami</div>
+          <div class="term-out">Naqvi — software instructor</div>
+          <br>
+          <div class="term-line"><span class="term-prompt">$</span> cat mission.txt</div>
+          <div class="term-comment">// teaching software the way I wish</div>
+          <div class="term-comment">// someone had taught me — clear,</div>
+          <div class="term-comment">// practical, project-first.</div>
+          <br>
+          <div class="term-line"><span class="term-prompt">$</span> ./enroll.sh<span class="cursor"></span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-head">
+      <div class="section-tag">about</div>
+      <h2>Meet your instructor</h2>
+    </div>
+    <div class="about-grid">
+      <img src="assets/naqvi-photo.jpeg" alt="Naqvi, software instructor" style="width:100%; border-radius:10px; border:1px solid var(--line); object-fit:cover; aspect-ratio:0.8;">
+      <div class="about-body">
+        <p><b>Naqvi</b> teaches software from the ground up — no assumed background, no rushed syllabus. 2 saal se students ko sikha rahe hain, hands-on projects ke through.</p>
+        <p>Every course follows the same idea: <b>understand it, build it, break it, fix it.</b> Students leave with projects they actually built, not just certificates.</p>
+        <div class="tag-list">
+          <span class="tag">3d animation</span>
+          <span class="tag">autocad</span>
+          <span class="tag">software engineering</span>
+          <span class="tag">computer skills</span>
+        </div>
+        <div class="contact-row">
+          <div class="contact-item">classes: <b>10:00 AM – 10:00 PM</b> daily</div>
+          <div class="contact-item">whatsapp: <b>0349 6234287</b> / <b>0348 0937221</b></div>
+          <div class="contact-item">location: <b>Moor Eminabad Railway Station, Gujranwala</b></div>
+        </div>
+        <div class="social-row">
+          <a href="https://instagram.com/learn.software.with.naqvi1" class="social-pill">Instagram</a>
+          <a href="https://facebook.com/learn.software.with.naqvi1" class="social-pill">Facebook</a>
+          <a href="https://youtube.com/@learn.software.with.naqvi1" class="social-pill">YouTube</a>
+          <a href="https://tiktok.com/@learn.software.with.naqvi1" class="social-pill">TikTok</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- COURSES -->
+  <section id="courses">
+    <div class="section-head">
+      <div class="section-tag">courses</div>
+      <h2>Pick your path</h2>
+      <p class="section-sub">Har course beginner-friendly hai — practical projects ke saath.</p>
+    </div>
+    <div class="course-list">
+      <div class="course-row">
+        <div class="course-icon">01</div>
+        <div class="course-name">blender-3d-animation.course</div>
+        <div class="course-desc">3D modeling, animation aur rendering, shuru se advanced tak</div>
+        <div class="course-meta">full course</div>
+      </div>
+      <div class="course-row">
+        <div class="course-icon">02</div>
+        <div class="course-name">autocad.course</div>
+        <div class="course-desc">2D/3D drafting aur design, industry projects ke saath</div>
+        <div class="course-meta">full course</div>
+      </div>
+      <div class="course-row">
+        <div class="course-icon">03</div>
+        <div class="course-name">software-engineering.course</div>
+        <div class="course-desc">Programming fundamentals se software development tak</div>
+        <div class="course-meta">full course</div>
+      </div>
+      <div class="course-row">
+        <div class="course-icon">04</div>
+        <div class="course-name">computer-skills.course</div>
+        <div class="course-desc">Essential computer aur office skills, beginners ke liye</div>
+        <div class="course-meta">full course</div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- PROCESS -->
+  <section id="process">
+    <div class="section-head">
+      <div class="section-tag">how it works</div>
+      <h2>From zero to shipped</h2>
+    </div>
+    <div class="process-grid">
+      <div class="process-step">
+        <div class="process-num">01</div>
+        <div class="process-title">Enroll</div>
+        <div class="process-desc">Course choose karein aur batch mein join karein.</div>
+      </div>
+      <div class="process-step">
+        <div class="process-num">02</div>
+        <div class="process-title">Learn</div>
+        <div class="process-desc">Live sessions, notes aur hands-on exercises.</div>
+      </div>
+      <div class="process-step">
+        <div class="process-num">03</div>
+        <div class="process-title">Build</div>
+        <div class="process-desc">Real projects banayein, portfolio ke liye.</div>
+      </div>
+      <div class="process-step">
+        <div class="process-num">04</div>
+        <div class="process-title">Launch</div>
+        <div class="process-desc">Job ya freelancing ke liye ready hon.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA / ENROLL FORM -->
+  <section class="cta-section" id="contact">
+    <div class="section-head">
+      <div class="section-tag">enroll</div>
+      <h2>Start your enrollment</h2>
+      <p class="section-sub">Form fill karein — submit karte hi WhatsApp par message ready mil jayega.</p>
+    </div>
+    <div class="form-box">
+      <form id="enroll-form">
+        <div class="form-row">
+          <div class="field">
+            <label for="ef-name">full name</label>
+            <input type="text" id="ef-name" required placeholder="Your name">
+          </div>
+          <div class="field">
+            <label for="ef-phone">phone number</label>
+            <input type="tel" id="ef-phone" required placeholder="03XX-XXXXXXX">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="field">
+            <label for="ef-course">course</label>
+            <select id="ef-course" required>
+              <option value="" disabled selected>select a course</option>
+              <option>Blender 3D Animation</option>
+              <option>AutoCAD</option>
+              <option>Software Engineering</option>
+              <option>Computer Skills</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="ef-time">preferred time</label>
+            <input type="text" id="ef-time" placeholder="e.g. 4:00 PM">
+          </div>
+        </div>
+        <div class="field" style="margin-bottom:16px;">
+          <label for="ef-msg">message (optional)</label>
+          <textarea id="ef-msg" placeholder="Koi sawal ya detail jo aap batana chahein"></textarea>
+        </div>
+        <button type="submit" class="form-submit">send enrollment on whatsapp →</button>
+        <p class="form-note">Submit karne par WhatsApp khulega, message pre-filled hoga — sirf send karna hoga.</p>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<script>
+document.getElementById('enroll-form').addEventListener('submit', function(e){
+  e.preventDefault();
+  var name = document.getElementById('ef-name').value.trim();
+  var phone = document.getElementById('ef-phone').value.trim();
+  var course = document.getElementById('ef-course').value;
+  var time = document.getElementById('ef-time').value.trim();
+  var msg = document.getElementById('ef-msg').value.trim();
+
+  var text = "Assalam o Alaikum, mein " + name + " enroll karna chahta/chahti hoon.\n" +
+             "Course: " + course + "\n" +
+             "Phone: " + phone +
+             (time ? "\nPreferred time: " + time : "") +
+             (msg ? "\nMessage: " + msg : "");
+
+  var url = "https://wa.me/923496234287?text=" + encodeURIComponent(text);
+  window.open(url, "_blank");
+});
+</script>
+
+<a href="https://wa.me/923496234287" class="whatsapp-float" aria-label="Message on WhatsApp">
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="#04210F"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.29-1.39a9.87 9.87 0 0 0 4.75 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2zm0 18.06h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.14.82.84-3.06-.2-.31a8.2 8.2 0 0 1-1.27-4.37c0-4.52 3.68-8.2 8.28-8.2 2.21 0 4.28.86 5.84 2.42a8.18 8.18 0 0 1 2.42 5.82c0 4.52-3.68 8.21-8.27 8.21zm4.53-6.16c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.12-.17.25-.64.81-.78.97-.14.17-.29.19-.54.06-.25-.12-1.04-.38-1.98-1.22-.73-.65-1.22-1.46-1.37-1.7-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.12-.15.16-.25.25-.41.08-.17.04-.31-.02-.44-.06-.12-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.43-.14-.01-.31-.01-.48-.01-.17 0-.44.06-.67.31-.23.25-.87.85-.87 2.08 0 1.23.89 2.42 1.02 2.58.12.17 1.75 2.67 4.24 3.75.59.26 1.06.41 1.42.52.6.19 1.14.16 1.57.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.08.15-1.18-.06-.1-.23-.16-.48-.28z"/></svg>
+</a>
+
+<footer>
+  <div class="wrap footer-row">
+    <div class="footer-brand">learn_software.naqvi — © 2026</div>
+    <div class="footer-links">
+      <a href="#about">about</a>
+      <a href="#courses">courses</a>
+      <a href="#contact">contact</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
